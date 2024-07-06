@@ -1,0 +1,23 @@
+image: python:latest
+stages:
+  - build
+  - test
+  - deploy
+
+
+build-app:
+  stage: build
+  script:
+    - echo "Building app........"
+    - pip install -r requirements.txt
+
+test-app:
+  stage: test
+  script:
+    - echo "Testing app......."
+
+deploy-app:
+  stage: deploy
+  script:
+    - echo "Deploy app......."
+    - streamlit run app.py
