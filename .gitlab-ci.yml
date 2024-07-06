@@ -23,7 +23,8 @@ deploy-app:
     - streamlit --version
   script:
     - echo "Deploy app......."
-    - streamlit run app.py
+    - which streamlit
+    - streamlit run app.py --server.headless true
   artifacts:
     paths:
       - "store"
