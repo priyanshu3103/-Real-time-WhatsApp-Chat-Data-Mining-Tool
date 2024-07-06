@@ -4,7 +4,8 @@ stages:
   - deploy
 
 before_script:
-    - docker ps
+    - apt-get update
+    - apt-get install docker.io
 
 build-app:
   stage: build
