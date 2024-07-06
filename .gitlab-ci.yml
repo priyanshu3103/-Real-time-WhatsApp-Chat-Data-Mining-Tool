@@ -4,6 +4,8 @@ stages:
   - test
   - deploy
 
+before_script:
+    - pip install --upgrade pip
 
 build-app:
   stage: build
@@ -24,7 +26,7 @@ deploy-app:
   script:
     - echo "Deploy app......."
     - which streamlit
-    - streamlit run app.py --server.headless true
+    # - streamlit run app.py --server.headless true
   artifacts:
     paths:
       - "store"
