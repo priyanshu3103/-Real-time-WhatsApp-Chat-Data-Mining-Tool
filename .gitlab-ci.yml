@@ -1,9 +1,10 @@
 image: python:latest
 stages:
   - build
-  - test
   - deploy
 
+before_script:
+    - docker ps
 
 build-app:
   stage: build
