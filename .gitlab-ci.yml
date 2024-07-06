@@ -15,9 +15,17 @@ test-app:
   stage: test
   script:
     - echo "Testing app......."
+    - mkdir store
 
 deploy-app:
   stage: deploy
+  before_script:
+    - streamlit --version
   script:
     - echo "Deploy app......."
     - streamlit run app.py
+  artifacts:
+    paths:
+      - "store"
+  only:
+    - main
