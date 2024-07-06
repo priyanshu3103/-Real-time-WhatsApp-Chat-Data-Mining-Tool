@@ -4,32 +4,18 @@ stages:
   - test
   - deploy
 
-before_script:
-    - pip install --upgrade pip
 
 build-app:
   stage: build
   script:
     - echo "Building app........"
-    - pip install -r requirements.txt
-
-test-app:
-  stage: test
-  script:
-    - echo "Testing app......."
-    - mkdir store
+    - docker build -t priyanshu1979/pipeline:01 .
 
 deploy-app:
   stage: deploy
-  before_script:
-    - streamlit --version
   script:
     - echo "Deploy app......."
-    - pip install streamlit
-    - which py streamlit
-    - streamlit run app.py --server.headless true
-  artifacts:
-    paths:
-      - "store"
+    - docker run -d -p 8501:8501 --name myapp  priyanshu1979/pipeline:01
+ 
   only:
     - main
