@@ -1,31 +1,29 @@
-image: python:latest
+image: docker:latest
 services:
-  - docker:latest
+  - docker:latest-bind
 
 stages:
   - build
   - deploy
 
+variables:
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:01
+
 before_script:
-  - apt-get update
-  - apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  - apt-get update
-  - apt-get install docker.io -y 
-  - docker --version
-  - service docker start
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build-app:
   stage: build
   script:
     - echo "Building app........"
-    - docker build -t priyanshu1979/pipeline:01 .
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
 
 deploy-app:
   stage: deploy
   script:
     - echo "Deploy app......."
-    - docker run -d -p 8501:8501 --name myapp  priyanshu1979/pipeline:01
+    # - docker run -d -p 8501:8501 --name myapp  priyanshu1979/pipeline:01
  
   only:
     - main
