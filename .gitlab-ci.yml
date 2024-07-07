@@ -1,6 +1,6 @@
-image: docker:latest
+image: docker:19.03.12
 services:
-  - docker:latest-bind
+  - docker:19.03.12-bind
 
 stages:
   - build
