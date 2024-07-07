@@ -4,7 +4,6 @@ services:
 
 
 stages:
-  - depend
   - build
   - deploy
 
@@ -17,12 +16,6 @@ before_script:
     - apk add --no-cache bash
     - rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
     
-
-depend:
-  stage: depend
-  script:
-    # Remove unnecessary files and packages to free up space
-    - python -m pip install --upgrade pip
 
 build-app:
   stage: build
