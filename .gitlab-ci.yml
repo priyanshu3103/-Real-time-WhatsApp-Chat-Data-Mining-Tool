@@ -23,13 +23,13 @@ depend:
   stage: depend
   script:
     # Remove unnecessary files and packages to free up space
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - python3 -m pip install --upgrade pip
 
 build-app:
   stage: build
   script:
     - echo "Building app........"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
 
