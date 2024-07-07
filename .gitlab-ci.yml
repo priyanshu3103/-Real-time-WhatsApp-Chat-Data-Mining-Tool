@@ -41,7 +41,7 @@ deploy-app:
   stage: deploy
   script:
     - echo "Deploy app......."
-    - docker run -d -p 8501:8501 --name myapp $CONTAINER_TEST_IMAGE
+    - docker run $DOCKER_REGISTRY/$IMAGE_NAME pytest
  
   only:
     - main
