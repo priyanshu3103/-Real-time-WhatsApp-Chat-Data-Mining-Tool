@@ -19,11 +19,10 @@ before_script:
     
 
 depend:
-  image: python:3.9
   stage: depend
   script:
     # Remove unnecessary files and packages to free up space
-    - python3 -m pip install --upgrade pip
+    - python -m pip install --upgrade pip
 
 build-app:
   stage: build
