@@ -16,6 +16,7 @@ before_script:
 setup:
   image: python:3.9
   stage: setup
+  when: manual
   script:
     - apt-get update 
     - apt-get install -y python3 && apt-get install -y python3-pip
@@ -27,6 +28,7 @@ build-app:
   image: docker:20.10.7
   services:
     - docker:20.10.7-dind
+  when: manual
   stage: build
   script:
     - echo "Building app........"
@@ -35,10 +37,13 @@ build-app:
     - docker push $CONTAINER_TEST_IMAGE
 
 deploy-app:
+  image: docker:20.10.7
+  services:
+    - docker:20.10.7-dind
   stage: deploy
   script:
     - echo "Deploy app......."
-    # - docker run -d -p 8501:8501 --name myapp  priyanshu1979/pipeline:01
+    - docker run -d -p 8501:8501 --name myapp $CONTAINER_TEST_IMAGE
  
   only:
     - main
