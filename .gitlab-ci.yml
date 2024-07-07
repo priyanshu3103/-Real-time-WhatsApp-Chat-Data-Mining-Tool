@@ -17,9 +17,9 @@ cleanup:
   stage: cleanup
   script:
     # Remove unnecessary files and packages to free up space
-    - apt-get update
-    - apt-get autoremove -y
-    - apt-get clean
+    - apk update
+    - apk autoremove -y
+    - apk clean
     - rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 build-app:
