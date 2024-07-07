@@ -1,7 +1,10 @@
-image: python3:latest
+image: docker:20.10.7
+services:
+  - docker:20.10.7-dind
+
 
 stages:
-  - cleanup
+  - depend
   - build
   - deploy
 
@@ -9,31 +12,28 @@ variables:
   CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:01
 
 before_script:
-    - python3 -m pip install --upgrade pip
-
-cleanup:
-  stage: cleanup
-  script:
-    # Remove unnecessary files and packages to free up space
+    - echo "Cleanup......"
     - apk update
     - apk add --no-cache bash
     - rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+    
+
+depend:
+  image: python:3.9
+  stage: depend
+  script:
+    # Remove unnecessary files and packages to free up space
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - python3 -m pip install --upgrade pip
 
 build-app:
-  image: docker:20.10.7
-  services:
-  - docker:20.10.7-dind
   stage: build
   script:
     - echo "Building app........"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
 
 deploy-app:
-  image: docker:20.10.7
-  services:
-  - docker:20.10.7-dind
   stage: deploy
   script:
     - echo "Deploy app......."
