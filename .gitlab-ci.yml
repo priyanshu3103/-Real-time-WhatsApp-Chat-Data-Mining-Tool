@@ -1,9 +1,6 @@
-image: docker:20.10.7
-services:
-  - docker:20.10.7-dind
-
 
 stages:
+  - setup
   - build
   - deploy
 
@@ -12,12 +9,23 @@ variables:
 
 before_script:
     - echo "Cleanup......"
-    - apk update
-    - apk add --no-cache bash
+    # - apk update
+    # - apk add --no-cache bash
     - rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
     
+setup:
+  image: python:3.9
+  stage: setup
+  script:
+    - apt-get update 
+    - apt-get install -y python3 && apt-get install -y python3-pip
+    - pip3 install --upgrade pip || true
+
 
 build-app:
+  image: docker:20.10.7
+  services:
+    - docker:20.10.7-dind
   stage: build
   script:
     - echo "Building app........"
