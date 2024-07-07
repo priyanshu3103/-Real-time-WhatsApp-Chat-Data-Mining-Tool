@@ -15,8 +15,7 @@ before_script:
     
 setup:
   image: python:3.9
-  stage: setup
-  when: manual
+  stage: setupl
   script:
     - apt-get update 
     - apt-get install -y python3 && apt-get install -y python3-pip
@@ -28,7 +27,6 @@ build-app:
   image: docker:20.10.7
   services:
     - docker:20.10.7-dind
-  when: manual
   stage: build
   script:
     - echo "Building app........"
