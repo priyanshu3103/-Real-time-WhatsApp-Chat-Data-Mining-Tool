@@ -1,6 +1,6 @@
 image: docker:19.03.12
 services:
-  - docker:19.03.12-bind
+  - docker:19.03.12-dind
 
 stages:
   - build
