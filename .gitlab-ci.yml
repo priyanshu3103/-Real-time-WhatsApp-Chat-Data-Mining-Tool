@@ -18,8 +18,8 @@ cleanup:
   script:
     # Remove unnecessary files and packages to free up space
     - apk update
-    - apk clean
-    - rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    - apk add --no-cache bash
+    - rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 build-app:
   stage: build
